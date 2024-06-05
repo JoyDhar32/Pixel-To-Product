@@ -5,6 +5,9 @@ import Shoes from "./pages/Shoes";
 import Tshirt from "./pages/Tshirt";
 import Table from "./pages/Table";
 import SampleTshirt from "./pages/Tshirt/SampleTshirt";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Error from "./pages/Error";
 import App from "./App";
 
 const router = createBrowserRouter([
@@ -15,8 +18,11 @@ const router = createBrowserRouter([
       { path: "", element: <HomePage /> },
       { path: "/shoes", element: <Shoes /> },
       { path: "/tshirt", element: <Tshirt /> },
-      { path: "/table", element: <Table /> },
       { path: "/tshirt/:id", element: <SampleTshirt /> },
+      { path: "/table", element: <Table /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "*", element: <Error /> },
     ],
   },
 ]);

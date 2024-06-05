@@ -1,8 +1,16 @@
 import React from 'react'
+import Home from './pages/Home'
+import Customizer from './pages/Customizer'
+import Canvas from './canvas'
 
 const index = () => {
   return (
-    <div>This is sample page of Single Tshirt</div>
+  
+  <main className="app transition-all ease-in">
+<Home />
+<Canvas />
+<Customizer />
+  </main>
   )
 }
 
