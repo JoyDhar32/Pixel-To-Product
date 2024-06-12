@@ -7,6 +7,7 @@ import Table from "./pages/Table";
 import SampleTshirt from "./pages/Tshirt/SampleTshirt";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Casual from "./pages/Shoes/Casual";
 import Error from "./pages/Error";
 import App from "./App";
 
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
       { path: "/table", element: <Table /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
+{path:"/shoes/casual",element:<Casual/>},
       { path: "*", element: <Error /> },
+     
     ],
   },
 ]);

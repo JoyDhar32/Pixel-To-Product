@@ -1,0 +1,21 @@
+.picker {
+    position: absolute !important;
+    top: 10%;
+    right: 5%;
+  }
+
+  @media screen and (max-width: 768px){
+    .picker {
+      position: absolute !important;
+      top: 5%;
+      right: 0%;
+      width:90px !important;
+      height:90px !important;
+    }
+  }
+  .commoncanvas{
+    width: 99;
+    height: 100vh;
+  }
+
+  
