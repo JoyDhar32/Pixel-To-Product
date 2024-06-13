@@ -10,6 +10,8 @@ import Contact from "./pages/Contact";
 import Casual from "./pages/Shoes/Casual";
 import Error from "./pages/Error";
 import App from "./App";
+import Signin from "./pages/Signin";
+import Signup from './pages/Signup'
 
 const router = createBrowserRouter([
   {
@@ -23,9 +25,13 @@ const router = createBrowserRouter([
       { path: "/table", element: <Table /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
-{path:"/shoes/casual",element:<Casual/>},
+      { path: "/shoes/casual", element: <Casual /> },
+
+
+
+      {path:'/signin', element:<Signin/>},
+      {path:'/signup', element:<Signup/>},
       { path: "*", element: <Error /> },
-     
     ],
   },
 ]);
