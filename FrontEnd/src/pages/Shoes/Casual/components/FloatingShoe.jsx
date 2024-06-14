@@ -13,7 +13,7 @@ import { HexColorPicker } from "react-colorful";
 import { proxy, useSnapshot } from "valtio";
 import { exp } from "maath/easing";
 import Download from "/images/download.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AutoModel from "./AutoModel";
 import OrderNow from "/images/orderNow.png";
 import Swap from "/images/swap.png";
@@ -43,6 +43,8 @@ const changeView = () => {
 const FloatingShoe = () => {
  
   const canvasRefs = useRef(null);
+  const [productName, setProductName] = useState("Customized Casual Shoes");
+  const [productPrice, setProductPrice] = useState(99);
   const [canvasReady, setCanvasReady] = useState(false);
   const [mesh, setMesh] = useState("#ffffff ");
   const [stripes, setStripes] = useState("#000080");
@@ -57,7 +59,7 @@ const FloatingShoe = () => {
   const [backgroundColor, setBackgroundColor] = useState(state.background);
   const [directionalLightColor, setDirectionalLightColor] = useState("#ffffff");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
-
+  const navigate = useNavigate();
 
   // useRef to get the value from the input field
 
@@ -118,8 +120,10 @@ const FloatingShoe = () => {
         patch: patch,
         shoeSize: shoeSize,
         shoeQty: shoeQty,
+        productName: productName,
+        productPrice: productPrice,
       };
-      console.log(data);
+      navigate('/shipping', { state: data });
     };
 
     

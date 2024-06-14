@@ -12,6 +12,7 @@ import Error from "./pages/Error";
 import App from "./App";
 import Signin from "./pages/Signin";
 import Signup from './pages/Signup'
+import Shipping from './pages/Shipping'
 
 const router = createBrowserRouter([
   {
@@ -26,11 +27,9 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/shoes/casual", element: <Casual /> },
-
-
-
       {path:'/signin', element:<Signin/>},
       {path:'/signup', element:<Signup/>},
+      {path:'/shipping', element:<Shipping/>},
       { path: "*", element: <Error /> },
     ],
   },
