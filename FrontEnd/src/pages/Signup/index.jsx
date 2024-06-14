@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import axiosClient from "../../axiosClient";
+import { useStateContext } from "../../contexts/contextprovider";
 
 const index = () => {
+  const fullnameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const {setUser, setToken} = useStateContext();
+
+  const SignupSubmit = (e) => {
+    ev.preventDefault();
+    const payload = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+    axiosClient
+      .post("/register", payload)
+      .then(({ data }) => {
+        setUser(data.user);
+        setToken(data.token);
+      })
+      .catch((err) => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          console.log(response.data.errors);
+        }
+      });
+  };
+
   return (
     <>
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,7 +45,7 @@ const index = () => {
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" action="#" method="POST">
+          <form class="space-y-6" onSubmit={SignupSubmit}>
             <div>
               <label
                 for="email"
@@ -27,6 +55,7 @@ const index = () => {
               </label>
               <div class="mt-2">
                 <input
+                  ref={fullnameRef}
                   id="fullname"
                   name="fullname"
                   type="fullname"
@@ -45,6 +74,7 @@ const index = () => {
               </label>
               <div class="mt-2">
                 <input
+                  ref={emailRef}
                   id="email"
                   name="email"
                   type="email"
@@ -67,12 +97,12 @@ const index = () => {
                   <a
                     href="#"
                     class="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                  </a>
+                  ></a>
                 </div>
               </div>
               <div class="mt-2">
                 <input
+                  ref={passwordRef}
                   id="password"
                   name="password"
                   type="password"
@@ -99,7 +129,8 @@ const index = () => {
               to="/signin"
               class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-             {" "} SingIn
+              {" "}
+              SingIn
             </Link>
           </p>
         </div>

@@ -1,7 +1,12 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
+import {useStateContext} from '../../contexts/contextprovider'
 
 const index = () => {
+const {user, token}= useStateContext();
+if(!token){
+    return <Navigate to={'/signin'} />
+}
     const location = useLocation();
     const { state } = location;
     console.log(state);

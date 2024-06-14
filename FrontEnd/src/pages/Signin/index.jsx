@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const index = () => {
+const emailRef  = useRef();
+const passwordRef = useRef();
+
+  const SigninSubmit = (e) => {
+    e.preventDefault();
+    const signinData = {
+     email : emailRef.current.value,
+     password : passwordRef.current.value
+    }
+
+
+  }
   return (
     <>
       <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,9 +29,9 @@ const index = () => {
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" action="#" method="POST">
+          <form class="space-y-6"  onSubmit={SigninSubmit}>
             <div>
-              <label
+              <label 
                 for="email"
                 class="block text-sm font-medium leading-6 text-gray-900"
               >
@@ -27,6 +39,7 @@ const index = () => {
               </label>
               <div class="mt-2">
                 <input
+                  ref={emailRef}
                   id="email"
                   name="email"
                   type="email"
@@ -46,16 +59,17 @@ const index = () => {
                   Password
                 </label>
                 <div class="text-sm">
-                  <a
-                    href="#"
+                  <Link
+                   to="#"
                     class="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div class="mt-2">
                 <input
+                  ref={passwordRef}
                   id="password"
                   name="password"
                   type="password"

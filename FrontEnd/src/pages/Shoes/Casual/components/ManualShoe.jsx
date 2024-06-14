@@ -227,7 +227,7 @@ const ManualShoe = () => {
               penumbra={1}
               position={[5, 25, 20]}
             />
-            <Environment files="royal_esplanade_1k.hdr" />
+            <Environment files="/GLB/royal_esplanade_1k.hdr" />
             <ContactShadows
               rotation-x={Math.PI / 2}
               position={[0, -1, 0]}
