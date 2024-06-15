@@ -2,25 +2,34 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../axiosClient";
 import { useStateContext } from "../../contexts/contextprovider";
+import { useNavigate } from 'react-router-dom';
 
 const index = () => {
   const fullnameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const navigate = useNavigate();
   const {setUser, setToken} = useStateContext();
 
   const SignupSubmit = (e) => {
-    ev.preventDefault();
+    e.preventDefault();
+    if (!fullnameRef.current || !emailRef.current || !passwordRef.current) {
+      console.error("One or more input references are undefined");
+      return;
+    }
     const payload = {
-      name: nameRef.current.value,
+      name: fullnameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
+
+    console.log(payload)
     axiosClient
       .post("/register", payload)
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
+        navigate(-1);
       })
       .catch((err) => {
         const response = err.response;

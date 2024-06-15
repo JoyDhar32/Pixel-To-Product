@@ -90,3 +90,31 @@ input[type="file"] {
 .sketch-picker > div:nth-child(3) {
   display: none !important;
 }
+
+body{
+  cursor: normal
+}
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  list-style-type: none;
+}
+
+.dropdown-menu li  {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f9f9f9;
+}

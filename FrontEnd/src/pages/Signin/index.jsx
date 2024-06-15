@@ -1,17 +1,32 @@
 import React, { useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axiosClient from "../../axiosClient";
+import { useStateContext } from "../../contexts/contextprovider";
+import { useNavigate } from 'react-router-dom';
 
 const index = () => {
 const emailRef  = useRef();
 const passwordRef = useRef();
+const navigate = useNavigate();
+const {setUser, setToken} = useStateContext();
 
   const SigninSubmit = (e) => {
     e.preventDefault();
-    const signinData = {
-     email : emailRef.current.value,
-     password : passwordRef.current.value
+    const payload = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
     }
-
+    console.log(payload);
+    axiosClient.post("/login",payload).then(({data})=>{
+        setUser(data.user);
+        setToken(data.token);
+        if(data.token)navigate(-1);
+}).catch(err => {
+    const response = err.response;
+    if(response && response.status === 422){
+        console.log(response.data.errors);
+    }
+});
 
   }
   return (
