@@ -40,18 +40,18 @@ const changeView = () => {
 
 const FloatingShoe = () => {
   const canvasRefs = useRef(null);
-  const [productName, setProductName] = useState("Customized Casual Shoes");
+  const [productName, setProductName] = useState("Customized_Casual_Shoes");
   const [productPrice, setProductPrice] = useState(99);
   const [canvasReady, setCanvasReady] = useState(false);
-  const [mesh, setMesh] = useState("#ffffff ");
+  const [mesh, setMesh] = useState("#61000A ");
   const [stripes, setStripes] = useState("#000080");
-  const [sole, setSole] = useState("#000000");
+  const [sole, setSole] = useState("#6D0C17");
   const [caps, setCaps] = useState("#D2B48C");
   const [inner, setInner] = useState("#ADD8E6");
   const [laces, setLaces] = useState("#654321");
   const [band, setBand] = useState("#556B2F");
   const [patch, setPatch] = useState("#FFD700");
-  const [shoeSize, setShoeSize] = useState("");
+  const [shoeSize, setShoeSize] = useState(40);
   const [shoeQty, setShoeQty] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState(state.background);
   const [directionalLightColor, setDirectionalLightColor] = useState("#ffffff");
@@ -119,7 +119,7 @@ const FloatingShoe = () => {
       shoeSize: shoeSize,
       shoeQty: shoeQty,
       productName: productName,
-      productPrice: productPrice,
+      productPrice: productPrice*shoeQty,
     };
     navigate("/shipping", { state: data });
   };
@@ -135,7 +135,7 @@ const FloatingShoe = () => {
           concurrent
           pixelRatio={[1, 1.5]}
           camera={{
-            position: isMobile ? [0, 0, 2] : [0, 0, 1.5],
+            position: isMobile ? [0, 0, 2.5] : [0, 0, 2],
             ref: cameraRef,
           }}
           onCreated={() => setCanvasReady(true)}
@@ -192,11 +192,23 @@ const FloatingShoe = () => {
                   <option value="" disabled>
                     Size
                   </option>
-                  <option value="40">40</option>
-                  <option value="41">41</option>
-                  <option value="42">42</option>
-                  <option value="43">43</option>
-                  <option value="44">44</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="6.5">6.5</option>
+                <option value="7">7</option>
+                <option value="7.5">7.5</option>
+                <option value="8">8</option>
+                <option value="8.5">8.5</option>
+                <option value="9">9</option>
+                <option value="9.5">9.5</option>
+                <option value="10">10</option>
+                <option value="10.5">10.5</option>
+                <option value="11">11</option>
+                <option value="11.5">11.5</option>
+                <option value="12">12</option>
+                <option value="12.5">12.5</option>
+                <option value="13">13</option>
                 </select>
               </div>
 

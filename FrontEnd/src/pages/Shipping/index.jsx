@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../../contexts/contextprovider";
 import axios from "../../axiosClient";
 
@@ -8,6 +8,7 @@ const index = () => {
   if (!token) {
     return <Navigate to={"/signin"} />;
   }
+  const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
   const [order, setOrder] = useState({
@@ -35,25 +36,35 @@ const index = () => {
   });
 
   const handleChange = (e) => {
-    setShippingData({ ...shippingdata,  [e.target.id]: e.target.value, });
+    setShippingData({ ...shippingdata, [e.target.id]: e.target.value });
   };
 
   const OrderSubmitted = async (e) => {
     e.preventDefault();
 
     try {
-      const orderResponse = await axios.post('http://localhost:8000/api/order-store', order);
-      console.log('Order submitted successfully', orderResponse.data);
+      const orderResponse = await axios.post(
+        "http://localhost:8000/api/order-store",
+        order
+      );
+      console.log("Order submitted successfully", orderResponse.data);
 
-      const shippingResponse = await axios.post('http://localhost:8000/api/shipping-store', { ...shippingdata, order_id: orderResponse.data.id });
-      console.log('Shipping submitted successfully', shippingResponse.data);
+      const shippingResponse = await axios.post(
+        "http://localhost:8000/api/shipping-store",
+        { ...shippingdata, order_id: orderResponse.data.id }
+      );
+      console.log("Shipping submitted successfully", shippingResponse.data);
 
-      alert('Form submitted successfully');
+      alert("Form submitted successfully");
+     const finalTotal= order.total;
+     const finalProductName= order.product_name;
+     
+      window.open(`http://127.0.0.1:8000/${finalProductName}/${finalTotal}`, "_blank");
     } catch (error) {
       if (error.response && error.response.data) {
         console.error(error.response.data.errors);
       } else {
-        console.error('There was an error submitting the form!', error);
+        console.error("There was an error submitting the form!", error);
       }
     }
   };
@@ -82,7 +93,6 @@ const index = () => {
                       value={shippingdata.first_name}
                       onChange={handleChange}
                     />
-
                   </div>
                   <div className="mb-4">
                     <label
@@ -144,7 +154,7 @@ const index = () => {
                       className="w-full px-3 py-2 border rounded-md"
                       id="state"
                       type="text"
-                      value= {shippingdata.state}
+                      value={shippingdata.state}
                       onChange={handleChange}
                     />
                   </div>

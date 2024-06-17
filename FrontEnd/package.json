@@ -12,8 +12,13 @@
   "dependencies": {
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.8",
+    "@react-three/postprocessing": "^2.16.2",
+    "@stripe/react-stripe-js": "^2.7.1",
+    "@stripe/stripe-js": "^3.5.0",
     "axios": "^1.7.2",
     "framer-motion": "^11.2.10",
+    "jotai": "^2.8.3",
+    "leva": "^0.9.35",
     "maath": "^0.10.7",
     "react": "^18.2.0",
     "react-color": "^2.19.3",

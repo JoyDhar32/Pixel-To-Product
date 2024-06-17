@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShippingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,7 @@ Route::post('login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
 Route::post('order-store',[OrderController::class,'store']);
 Route::post('shipping-store',[ShippingController::class,'store']);
+// Route::post('payment', [StripePaymentController::class, 'processPayment']);
+// Route::post('checkout',[StripePaymentController::class,'checkout'])->name('checkout');
+
+Route::post('/checkout',[StripePaymentController::class,'checkout']);

@@ -5,10 +5,10 @@ const state = proxy({
     isAuto:true,
     items: {
       laces: "#ffffff",
-      mesh: "#ffffff",
+      mesh: "#78001E",
       caps: "#ffffff",
       inner: "#ffffff",
-      sole: "#ffffff",
+      sole: "#2D0914",
       stripes: "#ffffff",
       band: "#ffffff",
       patch: "#ffffff",

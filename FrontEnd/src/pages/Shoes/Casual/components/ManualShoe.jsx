@@ -9,14 +9,13 @@ import {
 } from "@react-three/drei";
 import Download from "/images/download.png";
 import Swap from "/images/swap.png";
-import ColorIcon from "/public/images/swatch.png";
-import { Link } from "react-router-dom";
+import ColorIcon from "/images/swatch.png";
+import { Link, useNavigate } from "react-router-dom";
 import "../style.css";
 
 import state from "../config/voltioHelper";
 import { proxy, useSnapshot } from "valtio";
 import OrderNow from "/images/orderNow.png";
-
 
 const changeView = () => {
   state.isAuto = true;
@@ -83,10 +82,12 @@ const ManualShoe = () => {
   const [band, setBand] = useState("#556B2F");
   const [patch, setPatch] = useState("#FFD700");
   const [shoeSize, setShoeSize] = useState("");
-  const [shoeQty, setShoeQty] = useState(1)
+  const [shoeQty, setShoeQty] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState(state.background);
   const [directionalLightColor, setDirectionalLightColor] = useState("#ffffff");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+  const [productName, setProductName] = useState("Customized_Casual_Shoes");
+  const [productPrice, setProductPrice] = useState(99);
 
   // useRef to get the value from the input field
 
@@ -104,16 +105,16 @@ const ManualShoe = () => {
   const backgroundColorRef = useRef();
   const canvasRef = useRef();
   const cameraRef = useRef();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 900);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -130,9 +131,12 @@ const ManualShoe = () => {
       patch: patchRef.current.value,
       shoeSize: shoeSizeRef.current.value,
       shoeQty: shoeQtyRef.current.value,
-
+      productName: productName,
+      productPrice: productPrice*shoeQty,
     };
-    console.log(shoesData);
+    navigate("/shipping", { state: shoesData });
+
+    
   };
 
   const downloadCanvas = () => {
@@ -152,72 +156,85 @@ const ManualShoe = () => {
     document.body.removeChild(link);
   };
 
-  const ClickMain = () => {
+  const ClickMain = (e) => {
+    e.preventDefault();
     if (meshRef.current) {
       meshRef.current.click();
     }
   };
 
-  const ClickStripes = () => {
+  const ClickStripes = (e) => {
+    e.preventDefault();
     if (stripesRef.current) {
       stripesRef.current.click();
     }
   };
 
-  const ClickSole = () => {
+  const ClickSole = (e) => {
+    e.preventDefault();
     if (soleRef.current) {
       soleRef.current.click();
     }
   };
 
-  const ClickCaps = () => {
+  const ClickCaps = (e) => {
+    e.preventDefault();
     if (capsRef.current) {
       capsRef.current.click();
     }
   };
 
-  const ClickInner = () => {
+  const ClickInner = (e) => {
+    e.preventDefault();
     if (innerRef.current) {
       innerRef.current.click();
     }
   };
 
-  const ClickLaces = () => {
+  const ClickLaces = (e) => {
+    e.preventDefault();
     if (lacesRef.current) {
       lacesRef.current.click();
     }
   };
 
-  const ClickBand = () => {
+  const ClickBand = (e) => {
+    e.preventDefault();
     if (bandRef.current) {
       bandRef.current.click();
     }
   };
 
-  const ClickPatch = () => {
+  const ClickPatch = (e) => {
+    e.preventDefault();
     if (patchRef.current) {
       patchRef.current.click();
     }
   };
 
-  const ClickBackgroundChange = () => {
+  const ClickBackgroundChange = (e) => {
+    e.preventDefault();
     if (backgroundColorRef.current) {
       backgroundColorRef.current.click();
     }
   };
 
-
-
   return (
     <>
-      <div className="app transition-all ease-in commoncanvas" style={{backgroundColor:backgroundColor}}>
-        <Canvas 
-       concurrent
-       pixelRatio={[1, 1.5]}
-       camera={{ position: isMobile ? [0, 0, 2] : [0, 0, 1.5], ref: cameraRef }}
-       onCreated={() => setCanvasReady(true)} 
-       ref={canvasRef}
-       gl={{ preserveDrawingBuffer: true }}
+      <div
+        className="app transition-all ease-in commoncanvas"
+        style={{ backgroundColor: backgroundColor }}
+      >
+        <Canvas
+          concurrent
+          pixelRatio={[1, 1.5]}
+          camera={{
+            position: isMobile ? [0, 0, 2] : [0, 0, 1.5],
+            ref: cameraRef,
+          }}
+          onCreated={() => setCanvasReady(true)}
+          ref={canvasRef}
+          gl={{ preserveDrawingBuffer: true }}
         >
           <Suspense fallback={null}>
             <ambientLight intensity={1} />
@@ -264,675 +281,708 @@ const ManualShoe = () => {
             />
           </Suspense>
         </Canvas>
-
       </div>
 
       {/* Left side bar */}
 
+      {/* // Customization */}
 
+      <form onSubmit={shoesData}>
+        {isMobile ? (
+          <div className="absolute top-16 overflow-y-auto max-h-[calc(100vh - 16rem)] ">
+            <nav className="flex flex-wrap gap-1  min-w-[128px] border rounded-lg border-gray-200 bg-purple-500 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50">
+              <button
+                onClick={ClickMain}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Main{" "}
+                </small>
+              </button>
 
-{/* // Customization */}
+              <input
+                ref={meshRef}
+                type="color"
+                id="mesh"
+                name="mesh"
+                value={mesh}
+                onChange={(e) => setMesh(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-<form onSubmit={shoesData}>
-  {isMobile?(
+              {/* // Stripes */}
 
-      <div className="absolute top-16 overflow-y-auto max-h-[calc(100vh - 16rem)] ">
-        <nav className="flex flex-wrap gap-1  min-w-[128px] border rounded-lg border-gray-200 bg-purple-500 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50">
-         
-          <button
-            onClick={ClickMain}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-            <small className="text-center text-xs font-medium"> Main </small>
-          </button>
-  
-          <input
-            ref={meshRef}
-            type="color"
-            id="mesh"
-            name="mesh"
-            value={mesh}
-            onChange={(e) => setMesh(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Stripes */}
-  
-          <button
-            onClick={ClickStripes}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium">
-              {" "}
-              Stripes{" "}
-            </small>
-          </button>
-  
-          <input
-            ref={stripesRef}
-            type="color"
-            id="stripes"
-            name="stripes"
-            value={stripes}
-            onChange={(e) => setStripes(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Sole */}
-  
-          <button
-            onClick={ClickSole}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Sole </small>
-          </button>
-  
-          <input
-            ref={soleRef}
-            type="color"
-            id="sole"
-            name="sole"
-            value={sole}
-            onChange={(e) => setSole(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Caps */}
-  
-          <button
-            onClick={ClickCaps}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Caps </small>
-          </button>
-  
-          <input
-            ref={capsRef}
-            type="color"
-            id="caps"
-            name="caps"
-            value={caps}
-            onChange={(e) => setCaps(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Inner */}
-  
-          <button
-            onClick={ClickInner}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Inner </small>
-          </button>
-  
-          <input
-            ref={innerRef}
-            type="color"
-            id="inner"
-            name="inner"
-            value={inner}
-            onChange={(e) => setInner(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Laces */}
-  
-          <button
-            onClick={ClickLaces}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Laces </small>
-          </button>
-  
-          <input
-            ref={lacesRef}
-            type="color"
-            id="laces"
-            name="laces"
-            value={inner}
-            onChange={(e) => setLaces(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Band */}
-  
-          <button
-            onClick={ClickBand}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Band </small>
-          </button>
-  
-          <input
-            ref={bandRef}
-            type="color"
-            id="band"
-            name="band"
-            value={band}
-            onChange={(e) => setBand(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Patch */}
-  
-          <button
-            onClick={ClickPatch}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium"> Patch </small>
-          </button>
-  
-          <input
-            ref={patchRef}
-            type="color"
-            id="patch"
-            name="patch"
-            value={patch}
-            onChange={(e) => setPatch(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          {/* // Background Color */}
-  
-          <button
-            onClick={ClickBackgroundChange}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src="images/swatch.png"
-              alt="Color Icon"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium">
-              
-              BG
-            </small>
-          </button>
-  
-          <input
-            ref={backgroundColorRef}
-            type="color"
-            id="backgroundColor"
-            name="backgroundColor"
-            value={backgroundColor}
-            onChange={(e) => setBackgroundColor(e.target.value)}
-            style={{ display: "none" }} // Hide the input field initially
-          />
-  
-          <button
-            onClick={downloadCanvas}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-          >
-            <img
-              src={Download}
-              alt="download_image"
-              className="w-3/5 h-3/5 object-contain"
-            />
-  
-            <small className="text-center text-xs font-medium">
-              Download
-            </small>
-          </button>
-  
-  
-          <div className="flex flex-col items-center min-h-12 w-20 ml-2">
-    <select
-      ref={shoeSizeRef}
-      name="size"
-      id="size"
-      value={shoeSize}
-      onChange={(e) => setShoeSize(e.target.value)}
-      className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white"
-    >
-      <option value="" disabled>SIZE</option>
-      <option value="40">40</option>
-      <option value="41">41</option>
-      <option value="42">42</option>
-      <option value="43">43</option>
-      <option value="44">44</option>
-    </select>
-  </div>
-  
-  
-  
-  <div className="flex flex-col items-center min-h-12 w-20 ml-2">
-    <select
-      ref={shoeQtyRef}
-      name="size"
-      id="size"
-      value={shoeQty}
-      onChange={(e) => setShoeQty(e.target.value)}
-      className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white "
-    >
-      <option value="" disabled>QTY</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-  
-      
-    </select>
-  </div>
-  
-  
-  
-  <button
-            onClick={changeView}
-            className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-          >
-            <img
-              src={Swap}
-              alt="Swap Mode"
-              className="w-full h-fit object-contain"
-            />
-  
-          </button>
-  
-  
-          <button type="submit"
-            className="flex aspect-square min-h-16 w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-          >
-            <img
-              src={OrderNow}
-              alt="Order Now"
-              className="w-full h-fit object-contain"
-            />
-  
-          </button>
-  
-  
-        </nav>
-      </div>
-        
-  
-  
-  )
-    :    (
-    <Draggable>
+              <button
+                onClick={ClickStripes}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-    <div className="fixed top-40 left-5">
-      <nav className="grid grid-cols-2 gap-4 p-1.5 min-w-[128px] border rounded-lg border-gray-200 bg-purple-500 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 overflow-y-auto max-h-[95vh]">
-       
-        <button
-          onClick={ClickMain}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
-          <small className="text-center text-xs font-medium"> Main </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Stripes{" "}
+                </small>
+              </button>
 
-        <input
-          ref={meshRef}
-          type="color"
-          id="mesh"
-          name="mesh"
-          value={mesh}
-          onChange={(e) => setMesh(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={stripesRef}
+                type="color"
+                id="stripes"
+                name="stripes"
+                value={stripes}
+                onChange={(e) => setStripes(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Stripes */}
+              {/* // Sole */}
 
-        <button
-          onClick={ClickStripes}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickSole}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium">
-            {" "}
-            Stripes{" "}
-          </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Sole{" "}
+                </small>
+              </button>
 
-        <input
-          ref={stripesRef}
-          type="color"
-          id="stripes"
-          name="stripes"
-          value={stripes}
-          onChange={(e) => setStripes(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={soleRef}
+                type="color"
+                id="sole"
+                name="sole"
+                value={sole}
+                onChange={(e) => setSole(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Sole */}
+              {/* // Caps */}
 
-        <button
-          onClick={ClickSole}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickCaps}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Sole </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Caps{" "}
+                </small>
+              </button>
 
-        <input
-          ref={soleRef}
-          type="color"
-          id="sole"
-          name="sole"
-          value={sole}
-          onChange={(e) => setSole(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={capsRef}
+                type="color"
+                id="caps"
+                name="caps"
+                value={caps}
+                onChange={(e) => setCaps(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Caps */}
+              {/* // Inner */}
 
-        <button
-          onClick={ClickCaps}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickInner}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Caps </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Inner{" "}
+                </small>
+              </button>
 
-        <input
-          ref={capsRef}
-          type="color"
-          id="caps"
-          name="caps"
-          value={caps}
-          onChange={(e) => setCaps(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={innerRef}
+                type="color"
+                id="inner"
+                name="inner"
+                value={inner}
+                onChange={(e) => setInner(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Inner */}
+              {/* // Laces */}
 
-        <button
-          onClick={ClickInner}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickLaces}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Inner </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Laces{" "}
+                </small>
+              </button>
 
-        <input
-          ref={innerRef}
-          type="color"
-          id="inner"
-          name="inner"
-          value={inner}
-          onChange={(e) => setInner(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={lacesRef}
+                type="color"
+                id="laces"
+                name="laces"
+                value={inner}
+                onChange={(e) => setLaces(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Laces */}
+              {/* // Band */}
 
-        <button
-          onClick={ClickLaces}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickBand}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Laces </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Band{" "}
+                </small>
+              </button>
 
-        <input
-          ref={lacesRef}
-          type="color"
-          id="laces"
-          name="laces"
-          value={inner}
-          onChange={(e) => setLaces(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={bandRef}
+                type="color"
+                id="band"
+                name="band"
+                value={band}
+                onChange={(e) => setBand(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Band */}
+              {/* // Patch */}
 
-        <button
-          onClick={ClickBand}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickPatch}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Band </small>
-        </button>
+                <small className="text-center text-xs font-medium">
+                  {" "}
+                  Patch{" "}
+                </small>
+              </button>
 
-        <input
-          ref={bandRef}
-          type="color"
-          id="band"
-          name="band"
-          value={band}
-          onChange={(e) => setBand(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={patchRef}
+                type="color"
+                id="patch"
+                name="patch"
+                value={patch}
+                onChange={(e) => setPatch(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Patch */}
+              {/* // Background Color */}
 
-        <button
-          onClick={ClickPatch}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={ClickBackgroundChange}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={ColorIcon}
+                  alt="Color Icon"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-          <small className="text-center text-xs font-medium"> Patch </small>
-        </button>
+                <small className="text-center text-xs font-medium">BG</small>
+              </button>
 
-        <input
-          ref={patchRef}
-          type="color"
-          id="patch"
-          name="patch"
-          value={patch}
-          onChange={(e) => setPatch(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <input
+                ref={backgroundColorRef}
+                type="color"
+                id="backgroundColor"
+                name="backgroundColor"
+                value={backgroundColor}
+                onChange={(e) => setBackgroundColor(e.target.value)}
+                style={{ display: "none" }} // Hide the input field initially
+              />
 
-        {/* // Directional Light Color */}
+              <button
+                onClick={downloadCanvas}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+              >
+                <img
+                  src={Download}
+                  alt="download_image"
+                  className="w-3/5 h-3/5 object-contain"
+                />
 
-        <button
-          onClick={ClickBackgroundChange}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src="images/swatch.png"
-            alt="Color Icon"
-            className="w-3/5 h-3/5 object-contain"
-          />
+                <small className="text-center text-xs font-medium">
+                  Download
+                </small>
+              </button>
 
-          <small className="text-center text-xs font-medium">
-            {" "}
-            Background{" "}
-          </small>
-        </button>
+              <div className="flex flex-col items-center min-h-12 w-20 ml-2">
+                <select
+                  ref={shoeSizeRef}
+                  name="size"
+                  id="size"
+                  value={shoeSize}
+                  onChange={(e) => setShoeSize(e.target.value)}
+                  className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white"
+                >
+                  <option value="" disabled>
+                    SIZE
+                  </option>
+                  <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="6.5">6.5</option>
+                <option value="7">7</option>
+                <option value="7.5">7.5</option>
+                <option value="8">8</option>
+                <option value="8.5">8.5</option>
+                <option value="9">9</option>
+                <option value="9.5">9.5</option>
+                <option value="10">10</option>
+                <option value="10.5">10.5</option>
+                <option value="11">11</option>
+                <option value="11.5">11.5</option>
+                <option value="12">12</option>
+                <option value="12.5">12.5</option>
+                <option value="13">13</option>
+                </select>
+              </div>
 
-        <input
-          ref={backgroundColorRef}
-          type="color"
-          id="backgroundColor"
-          name="backgroundColor"
-          value={backgroundColor}
-          onChange={(e) => setBackgroundColor(e.target.value)}
-          style={{ display: "none" }} // Hide the input field initially
-        />
+              <div className="flex flex-col items-center min-h-12 w-20 ml-2">
+                <select
+                  ref={shoeQtyRef}
+                  name="size"
+                  id="size"
+                  value={shoeQty}
+                  onChange={(e) => setShoeQty(e.target.value)}
+                  className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white "
+                >
+                  <option value="" disabled>
+                    QTY
+                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
 
-        <button
-          onClick={downloadCanvas}
-          className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
-        >
-          <img
-            src={Download}
-            alt="download_image"
-            className="w-3/5 h-3/5 object-contain"
-          />
+              <button
+                onClick={changeView}
+                className="flex aspect-square min-h-12 w-12 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+              >
+                <img
+                  src={Swap}
+                  alt="Swap Mode"
+                  className="w-full h-fit object-contain"
+                />
+              </button>
 
-          <small className="text-center text-xs font-medium">
-            Downloads
-          </small>
-        </button>
+              <button
+                type="submit"
+                className="flex aspect-square min-h-16 w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+              >
+                <img
+                  src={OrderNow}
+                  alt="Order Now"
+                  className="w-full h-fit object-contain"
+                />
+              </button>
+            </nav>
+          </div>
+        ) : (
+          <Draggable>
+            <div className="fixed top-40 left-5">
+              <nav className="grid grid-cols-2 gap-4 p-1.5 min-w-[128px] border rounded-lg border-gray-200 bg-purple-500 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 overflow-y-auto max-h-[95vh]">
+                <button
+                  onClick={ClickMain}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Main{" "}
+                  </small>
+                </button>
 
+                <input
+                  ref={meshRef}
+                  type="color"
+                  id="mesh"
+                  name="mesh"
+                  value={mesh}
+                  onChange={(e) => setMesh(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
 
-        <div className="flex flex-col items-center">
-  <select
-    ref={shoeSizeRef}
-    name="size"
-    id="size"
-    value={shoeSize}
-    onChange={(e) => setShoeSize(e.target.value)}
-    className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white"
-  >
-    <option value="" disabled>SIZE</option>
-    <option value="40">40</option>
-    <option value="41">41</option>
-    <option value="42">42</option>
-    <option value="43">43</option>
-    <option value="44">44</option>
-  </select>
-</div>
+                {/* // Stripes */}
 
+                <button
+                  onClick={ClickStripes}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Stripes{" "}
+                  </small>
+                </button>
 
-<div className="flex flex-col items-center">
-  <select
-    ref={shoeQtyRef}
-    name="size"
-    id="size"
-    value={shoeQty}
-    onChange={(e) => setShoeQty(e.target.value)}
-    className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white "
-  >
-    <option value="" disabled>QTY</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
+                <input
+                  ref={stripesRef}
+                  type="color"
+                  id="stripes"
+                  name="stripes"
+                  value={stripes}
+                  onChange={(e) => setStripes(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
 
-    
-  </select>
-</div>
+                {/* // Sole */}
 
+                <button
+                  onClick={ClickSole}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Sole{" "}
+                  </small>
+                </button>
 
-<button
-          onClick={changeView}
-          className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-        >
-          <img
-            src={Swap}
-            alt="Swap Mode"
-            className="w-full h-fit object-contain"
-          />
+                <input
+                  ref={soleRef}
+                  type="color"
+                  id="sole"
+                  name="sole"
+                  value={sole}
+                  onChange={(e) => setSole(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
 
-        </button>
+                {/* // Caps */}
 
+                <button
+                  onClick={ClickCaps}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
-        <button type="submit"
-          className="flex aspect-square min-h-[32px] w-20 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-        >
-          <img
-            src={OrderNow}
-            alt="Order Now"
-            className="w-full h-fit object-contain"
-          />
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Caps{" "}
+                  </small>
+                </button>
 
-        </button>
+                <input
+                  ref={capsRef}
+                  type="color"
+                  id="caps"
+                  name="caps"
+                  value={caps}
+                  onChange={(e) => setCaps(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
 
+                {/* // Inner */}
 
-      </nav>
-    </div>
-  </Draggable>
-    
-  )}
-  
+                <button
+                  onClick={ClickInner}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Inner{" "}
+                  </small>
+                </button>
+
+                <input
+                  ref={innerRef}
+                  type="color"
+                  id="inner"
+                  name="inner"
+                  value={inner}
+                  onChange={(e) => setInner(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
+
+                {/* // Laces */}
+
+                <button
+                  onClick={ClickLaces}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Laces{" "}
+                  </small>
+                </button>
+
+                <input
+                  ref={lacesRef}
+                  type="color"
+                  id="laces"
+                  name="laces"
+                  value={inner}
+                  onChange={(e) => setLaces(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
+
+                {/* // Band */}
+
+                <button
+                  onClick={ClickBand}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Band{" "}
+                  </small>
+                </button>
+
+                <input
+                  ref={bandRef}
+                  type="color"
+                  id="band"
+                  name="band"
+                  value={band}
+                  onChange={(e) => setBand(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
+
+                {/* // Patch */}
+
+                <button
+                  onClick={ClickPatch}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Patch{" "}
+                  </small>
+                </button>
+
+                <input
+                  ref={patchRef}
+                  type="color"
+                  id="patch"
+                  name="patch"
+                  value={patch}
+                  onChange={(e) => setPatch(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
+
+                {/* // Directional Light Color */}
+
+                <button
+                  onClick={ClickBackgroundChange}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={ColorIcon}
+                    alt="Color Icon"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+
+                  <small className="text-center text-xs font-medium">
+                    {" "}
+                    Background{" "}
+                  </small>
+                </button>
+
+                <input
+                  ref={backgroundColorRef}
+                  type="color"
+                  id="backgroundColor"
+                  name="backgroundColor"
+                  value={backgroundColor}
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                  style={{ display: "none" }} // Hide the input field initially
+                />
+
+                <button
+                  onClick={downloadCanvas}
+                  className="flex aspect-square min-h-[16px] w-16 flex-col items-center justify-center  rounded-md  bg-transparent text-indigo-600 dark:bg-transparent dark:text-sky-50"
+                >
+                  <img
+                    src={Download}
+                    alt="download_image"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
+
+                  <small className="text-center text-xs font-medium">
+                    Downloads
+                  </small>
+                </button>
+
+                <div className="flex flex-col items-center">
+                  <select
+                    ref={shoeSizeRef}
+                    name="size"
+                    id="size"
+                    value={shoeSize}
+                    onChange={(e) => setShoeSize(e.target.value)}
+                    className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white"
+                  >
+                    <option value="" disabled>
+                      SIZE
+                    </option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="6.5">6.5</option>
+                    <option value="7">7</option>
+                    <option value="7.5">7.5</option>
+                    <option value="8">8</option>
+                    <option value="8.5">8.5</option>
+                    <option value="9">9</option>
+                    <option value="9.5">9.5</option>
+                    <option value="10">10</option>
+                    <option value="10.5">10.5</option>
+                    <option value="11">11</option>
+                    <option value="11.5">11.5</option>
+                    <option value="12">12</option>
+                    <option value="12.5">12.5</option>
+                    <option value="13">13</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col items-center">
+                  <select
+                    ref={shoeQtyRef}
+                    name="size"
+                    id="size"
+                    value={shoeQty}
+                    onChange={(e) => setShoeQty(e.target.value)}
+                    className="block w-full py-2 px-3 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-[#054fb9] text-white "
+                  >
+                    <option value="" disabled>
+                      QTY
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+
+                <button
+                  onClick={changeView}
+                  className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+                >
+                  <img
+                    src={Swap}
+                    alt="Swap Mode"
+                    className="w-full h-fit object-contain"
+                  />
+                </button>
+
+                <button
+                  type="submit"
+                  className="flex aspect-square min-h-[32px] w-20 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+                >
+                  <img
+                    src={OrderNow}
+                    alt="Order Now"
+                    className="w-full h-fit object-contain"
+                  />
+                </button>
+              </nav>
+            </div>
+          </Draggable>
+        )}
       </form>
-
-
     </>
   );
 };
