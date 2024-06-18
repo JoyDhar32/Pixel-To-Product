@@ -14,6 +14,7 @@ import Signin from "./pages/Signin";
 import Signup from './pages/Signup'
 import Shipping from './pages/Shipping'
 import Checkout from './pages/Checkout'
+import Airforce from './pages/Shoes/Airforce'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/shoes/casual", element: <Casual /> },
+      {path: "/shoes/airforce", element:<Airforce/>},
       {path:'/signin', element:<Signin/>},
       {path:'/signup', element:<Signup/>},
       {path:'/shipping', element:<Shipping/>},

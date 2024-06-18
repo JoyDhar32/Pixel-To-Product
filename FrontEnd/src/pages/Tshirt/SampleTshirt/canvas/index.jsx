@@ -7,11 +7,11 @@ import CameraRig from './CameraRig';
 
 const CanvasModel = () => {
   return (
-    <Canvas
+    <Canvas 
       shadows
       camera={{ position: [0, 0, 0], fov: 22 }}
       gl={{ preserveDrawingBuffer: true }}
-      className="w-full max-w-full h-full transition-all ease-in"
+      className="w-full max-w-full h-full transition-all ease-in mt-[-30px]"
     >
       <ambientLight intensity={1} />
       <Environment preset="city" />

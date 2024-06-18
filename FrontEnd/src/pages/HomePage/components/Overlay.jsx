@@ -1,13 +1,15 @@
 import { atom, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { scenes } from "./Experience";
-
+import { FaShoppingCart, FaEdit } from 'react-icons/fa';
+import { Link, useNavigate } from "react-router-dom";
 export const slideAtom = atom(0);
 
 export const Overlay = () => {
   const [slide, setSlide] = useAtom(slideAtom);
   const [displaySlide, setDisplaySlide] = useState(slide);
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
       setVisible(true);
@@ -21,6 +23,12 @@ export const Overlay = () => {
       setVisible(true);
     }, 2600);
   }, [slide]);
+
+const handleshop = (e) => {
+  e.preventDefault()
+  navigate("/shoes");
+}
+
   return (
     <>
       <div
@@ -103,29 +111,29 @@ export const Overlay = () => {
                   ${scenes[displaySlide].price.toLocaleString()}
                 </p>
               </div>
-              <p className="text-sm opacity-80">After Federal Tax Credit</p>
+              <p className="text-sm opacity-80">Price Starts From</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
+              <div className="flex gap-2 items-center">
+              <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 mr-2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M4.5 10.5H18V15H4.5v-4.5zM3.75 18h15A2.25 2.25 0 0021 15.75v-6a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 001.5 9.75v6A2.25 2.25 0 003.75 18z"
-                  />
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.862 4.487l2.65 2.65m-2.65-2.65L6.36 17.004a3.375 3.375 0 01-1.312.856l-3.125 1.043 1.043-3.125a3.375 3.375 0 01.856-1.312l10.502-10.502zm2.65 2.65L15 10.512"
+                    />
                 </svg>
                 <p className="font-semibold text-3xl">
-                  {scenes[displaySlide].range}km
+                 Explore Creativity
                 </p>
               </div>
-              <p className="text-sm opacity-80">With one single charge</p>
+              <p className="text-sm opacity-80">Customize Every Pixel of Product</p>
             </div>
           </div>
         </div>

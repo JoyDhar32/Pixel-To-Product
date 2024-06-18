@@ -139,7 +139,8 @@ const ManualShoe = () => {
     
   };
 
-  const downloadCanvas = () => {
+  const downloadCanvas = (e) => {
+e.preventDefault();
     if (!canvasReady) {
       console.error("Canvas is not ready yet");
       return;

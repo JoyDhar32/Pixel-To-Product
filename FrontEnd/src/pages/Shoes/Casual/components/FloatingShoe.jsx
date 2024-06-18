@@ -2,6 +2,7 @@ import React, { Suspense, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import "../style.css";
 import state from "../config/voltioHelper";
+import Draggable from "react-draggable";
 
 import {
   ContactShadows,
@@ -119,7 +120,7 @@ const FloatingShoe = () => {
       shoeSize: shoeSize,
       shoeQty: shoeQty,
       productName: productName,
-      productPrice: productPrice*shoeQty,
+      productPrice: productPrice * shoeQty,
     };
     navigate("/shipping", { state: data });
   };
@@ -172,120 +173,126 @@ const FloatingShoe = () => {
             />
           </Suspense>
           {/* <OrbitControls minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} enableZoom={true} enablePan={true} /> */}
-          <OrbitControls />
+          <OrbitControls
+            enableRotate={true}
+            autoRotate={true}
+            autoRotateSpeed={1}
+          />
         </Canvas>
         <Picker />
 
         <form>
-          <div className="relative bg-red-500 dark:bg-red-900 w-screen h-screen pattern">
-            <nav className="z-20 flex shrink-0 grow-0 justify-around gap-4 border-t border-gray-200 bg-purle-500 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-6 min-h-[auto] min-w-[64px] flex-col rounded-lg border">
-              <div className="flex flex-col items-center min-h-12 w-16 ">
-                <select
-                  ref={shoeSizeRef}
-                  name="size"
-                  id="size"
-                  value={shoeSize}
-                  onChange={(e) => setShoeSize(e.target.value)}
-                  className="block w-full py-2 px-1 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-white text-black"
-                  required
+          <Draggable>
+            <div className="fixed top-2/3 left-5">
+              <nav className="z-20 flex shrink-0 grow-0 justify-around gap-4 border-t border-gray-200 bg-purle-500 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/3 -translate-y-2/4 left-6 min-h-[auto] min-w-[64px] flex-col rounded-lg border">
+                <div className="flex flex-col items-center min-h-12 w-16 ">
+                  <select
+                    ref={shoeSizeRef}
+                    name="size"
+                    id="size"
+                    value={shoeSize}
+                    onChange={(e) => setShoeSize(e.target.value)}
+                    className="block w-full py-2 px-1 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900 bg-white text-black"
+                    required
+                  >
+                    <option value="" disabled>
+                      Size
+                    </option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="6.5">6.5</option>
+                    <option value="7">7</option>
+                    <option value="7.5">7.5</option>
+                    <option value="8">8</option>
+                    <option value="8.5">8.5</option>
+                    <option value="9">9</option>
+                    <option value="9.5">9.5</option>
+                    <option value="10">10</option>
+                    <option value="10.5">10.5</option>
+                    <option value="11">11</option>
+                    <option value="11.5">11.5</option>
+                    <option value="12">12</option>
+                    <option value="12.5">12.5</option>
+                    <option value="13">13</option>
+                  </select>
+                </div>
+
+                <hr className="dark:border-gray-700/60" />
+
+                <div className="flex flex-col items-center min-h-12 w-16 ">
+                  <select
+                    ref={shoeQtyRef}
+                    name="size"
+                    id="size"
+                    value={shoeQty}
+                    onChange={(e) => setShoeQty(e.target.value)}
+                    className="block w-full py-2 px-1 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900  bg-white text-black"
+                  >
+                    <option value="" selected disabled>
+                      Pair
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+
+                <hr className="dark:border-gray-700/60" />
+
+                <button
+                  onClick={downloadCanvas}
+                  className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
                 >
-                  <option value="" disabled>
-                    Size
-                  </option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="6.5">6.5</option>
-                <option value="7">7</option>
-                <option value="7.5">7.5</option>
-                <option value="8">8</option>
-                <option value="8.5">8.5</option>
-                <option value="9">9</option>
-                <option value="9.5">9.5</option>
-                <option value="10">10</option>
-                <option value="10.5">10.5</option>
-                <option value="11">11</option>
-                <option value="11.5">11.5</option>
-                <option value="12">12</option>
-                <option value="12.5">12.5</option>
-                <option value="13">13</option>
-                </select>
-              </div>
+                  <img
+                    src={Download}
+                    alt="download_image"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
-              <hr className="dark:border-gray-700/60" />
+                  <small className="text-center text-xs font-medium">
+                    Download
+                  </small>
+                </button>
 
-              <div className="flex flex-col items-center min-h-12 w-16 ">
-                <select
-                  ref={shoeQtyRef}
-                  name="size"
-                  id="size"
-                  value={shoeQty}
-                  onChange={(e) => setShoeQty(e.target.value)}
-                  className="block w-full py-2 px-1 rounded-xl shadow-sm focus:outline-none focus:border-indigo-900 focus:ring focus:ring-indigo-900  bg-white text-black"
+                <hr className="dark:border-gray-700/60" />
+                <button
+                  onClick={changeView}
+                  className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
                 >
-                  <option value="" selected disabled>
-                    Pair
-                  </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
+                  <img
+                    src={Swap}
+                    alt="Swap_image"
+                    className="w-3/5 h-3/5 object-contain"
+                  />
 
-              <hr className="dark:border-gray-700/60" />
+                  <small className="text-center text-xs font-medium">
+                    Manual
+                  </small>
+                </button>
 
-              <button
-                onClick={downloadCanvas}
-                className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-              >
-                <img
-                  src={Download}
-                  alt="download_image"
-                  className="w-3/5 h-3/5 object-contain"
-                />
-
-                <small className="text-center text-xs font-medium">
-                  Download
-                </small>
-              </button>
-
-              <hr className="dark:border-gray-700/60" />
-              <button
-                onClick={changeView}
-                className="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-              >
-                <img
-                  src={Swap}
-                  alt="Swap_image"
-                  className="w-3/5 h-3/5 object-contain"
-                />
-
-                <small className="text-center text-xs font-medium">
-                  Manual
-                </small>
-              </button>
-
-              <hr className="dark:border-gray-700/60" />
-              <button
-                type="submit"
-                onClick={shoesData}
-                className="flex aspect-square min-h-16 w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-              >
-                <img
-                  src={OrderNow}
-                  alt="Order Now"
-                  className="w-full h-fit object-contain"
-                />
-              </button>
-            </nav>
-          </div>
+                <hr className="dark:border-gray-700/60" />
+                <button
+                  type="submit"
+                  onClick={shoesData}
+                  className="flex aspect-square min-h-16 w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
+                >
+                  <img
+                    src={OrderNow}
+                    alt="Order Now"
+                    className="w-full h-fit object-contain"
+                  />
+                </button>
+              </nav>
+            </div>
+          </Draggable>
         </form>
       </main>
     </>

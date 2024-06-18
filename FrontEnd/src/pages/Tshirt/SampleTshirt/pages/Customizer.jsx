@@ -6,7 +6,11 @@ import config from "../../../../config/config";
 import state from "../../../../store";
 import { download } from "../../../../assets";
 import { downloadCanvasToImage, reader } from "../../../../config/helpers";
-import { EditorTabs, FilterTabs, DecalTypes } from "../../../../config/constants";
+import {
+  EditorTabs,
+  FilterTabs,
+  DecalTypes,
+} from "../../../../config/constants";
 import { fadeAnimation, slideAnimation } from "../../../../config/motion";
 import {
   AIPicker,
@@ -15,6 +19,7 @@ import {
   FilePicker,
   Tab,
 } from "../components";
+import { useNavigate } from "react-router-dom";
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -113,6 +118,33 @@ const Customizer = () => {
     });
   };
 
+  const [size, setSize] = useState("S");
+  const [price, setPrice] = useState(49.99);
+  const [productName, setProductName] = useState("Customized_Unisex_Tshirt");
+  const [qty, setQty] = useState(1);
+  const navigate = useNavigate();
+
+  const handleSizeChange = (e) => {
+    e.preventDefault();
+    setSize(e.target.value);
+  };
+  const handleQtyChange = (e) => {
+    e.preventDefault();
+    setQty(e.target.value);
+  };
+  const OrderSubmitted = (e) => {
+    e.preventDefault();
+    const data={
+      shoeSize: size,
+      shoeQty: qty,
+      productName: productName,
+      productPrice: price * qty,
+
+    }
+    navigate("/shipping", { state: data });
+    
+
+  };
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -166,6 +198,42 @@ const Customizer = () => {
             <button className="download-btn" onClick={downloadCanvasToImage}>
               <img
                 src={download}
+                alt="download_image"
+                className="w-3/5 h-3/5 object-contain"
+              />
+            </button>
+
+            <select
+              value={size}
+              onChange={handleSizeChange}
+              className=" download-btn text-orange-900 text-center font-bold bg-blue-500 "
+            >
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <select
+              value={qty}
+              onChange={handleQtyChange}
+              className=" download-btn text-orange-900 text-center font-bold bg-blue-500 "
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+             
+            </select>
+            {/* Download button */}
+            <button className="download-btn" onClick={OrderSubmitted}>
+              <img
+                src="/images/orderNow.png"
                 alt="download_image"
                 className="w-3/5 h-3/5 object-contain"
               />

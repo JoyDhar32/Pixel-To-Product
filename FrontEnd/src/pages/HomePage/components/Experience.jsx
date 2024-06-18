@@ -17,27 +17,26 @@ export const scenes = [
   {
     path: "models/minish_shoe_house.glb",
     mainColor: "green",
-    name: "Cybertruck",
+    name: "Shoe House",
     description:
-      "Better utility than a truck with more performance than a sports car",
-    price: 72000,
-    range: 660,
+      "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
+    price: 99,
   },
   {
     path: "models/shoe.glb",
     mainColor: "#c0ffe1",
-    name: "Model 3",
-    description: "The car of the future",
-    price: 29740,
-    range: 576,
+    name: "Casual Model",
+    description:
+    "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
+  price: 99,
   },
   {
     path: "models/frau_shoes.glb",
     mainColor: "#ffdec0",
-    name: "Semi",
-    description: "The Future of Trucking",
-    price: 150000,
-    range: 800,
+    name: "Sport Model",
+    description:
+    "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
+  price: 99,
   },
 ];
 
