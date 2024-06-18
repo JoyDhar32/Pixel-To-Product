@@ -6,7 +6,7 @@ import axios from "../../axiosClient";
 const index = () => {
   const { user, token } = useStateContext();
   if (!token) {
-    return <Navigate to={"/signin"} />;
+    return <Navigate to={"/signup"} />;
   }
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,10 +56,13 @@ const index = () => {
       console.log("Shipping submitted successfully", shippingResponse.data);
 
       alert("Form submitted successfully");
-     const finalTotal= order.total;
-     const finalProductName= order.product_name;
-     
-      window.open(`http://127.0.0.1:8000/${finalProductName}/${finalTotal}`, "_blank");
+      const finalTotal = order.total;
+      const finalProductName = order.product_name;
+
+      window.open(
+        `http://127.0.0.1:8000/${finalProductName}/${finalTotal}`,
+        "_blank"
+      );
     } catch (error) {
       if (error.response && error.response.data) {
         console.error(error.response.data.errors);
@@ -92,6 +95,7 @@ const index = () => {
                       type="text"
                       value={shippingdata.first_name}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="mb-4">
@@ -102,6 +106,7 @@ const index = () => {
                       Last Name
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="last_name"
                       type="text"
@@ -119,6 +124,7 @@ const index = () => {
                       Email Address
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="email"
                       type="email"
@@ -134,6 +140,7 @@ const index = () => {
                       Mobile
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="mobile"
                       type="tel"
@@ -151,6 +158,7 @@ const index = () => {
                       State
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="state"
                       type="text"
@@ -166,6 +174,7 @@ const index = () => {
                       City
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="city"
                       type="text"
@@ -181,6 +190,7 @@ const index = () => {
                       Suburb
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="suburb"
                       type="text"
@@ -198,6 +208,7 @@ const index = () => {
                       Postal Code
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="postal_code"
                       type="text"
@@ -213,6 +224,7 @@ const index = () => {
                       Address
                     </label>
                     <input
+                      required
                       className="w-full px-3 py-2 border rounded-md"
                       id="address"
                       type="text"

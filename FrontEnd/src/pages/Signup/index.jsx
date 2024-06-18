@@ -29,7 +29,8 @@ const index = () => {
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
-        navigate(-1);
+        alert("Account created successfully");
+        if(data.token)navigate(-1); 
       })
       .catch((err) => {
         const response = err.response;
@@ -45,7 +46,7 @@ const index = () => {
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             class="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src="/p2p.png"
             alt="Your Company"
           />
           <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -70,7 +71,7 @@ const index = () => {
                   type="fullname"
                   autocomplete="fullname"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -89,7 +90,7 @@ const index = () => {
                   type="email"
                   autocomplete="email"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -102,12 +103,7 @@ const index = () => {
                 >
                   Password
                 </label>
-                <div class="text-sm">
-                  <a
-                    href="#"
-                    class="font-semibold text-indigo-600 hover:text-indigo-500"
-                  ></a>
-                </div>
+          
               </div>
               <div class="mt-2">
                 <input
@@ -117,7 +113,7 @@ const index = () => {
                   type="password"
                   autocomplete="current-password"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

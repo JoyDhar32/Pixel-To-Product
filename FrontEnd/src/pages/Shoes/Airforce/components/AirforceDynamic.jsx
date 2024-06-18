@@ -42,9 +42,9 @@ const changeView = () => {
 const FloatingShoe = () => {
   const canvasRefs = useRef(null);
   const [productName, setProductName] = useState("Customized_Nike_Air_Force");
-  const [productPrice, setProductPrice] = useState(99);
+  const [productPrice, setProductPrice] = useState(199);
   const [canvasReady, setCanvasReady] = useState(false);
-  const [grund, setgrund] = useState("#61000A ");
+  const [grund, setgrund] = useState("#61000A");
   const [nike_logga, setnike_logga] = useState("#000080");
   const [baksida_logga, setbaksida_logga] = useState("#6D0C17");
   const [framsida, setframsida] = useState("#D2B48C");
@@ -52,7 +52,7 @@ const FloatingShoe = () => {
   const [framsida_vre, setframsida_vre] = useState("#654321");
   const [sko_sula_underdel, setsko_sula_underdel] = useState("#556B2F");
   const [sko_sula_sida, setsko_sula_sida] = useState("#FFD700");
-  const [sko_sula_framifrn, setsko_sula_framifrn] = useState("#61000A ");
+  const [sko_sula_framifrn, setsko_sula_framifrn] = useState("#61000A");
   const [metall_svart, setmetall_svart] = useState("#000080");
   const [Material_006, setmaterial_006] = useState("#6D0C17");
   const [Material_004, setmaterial_004] = useState("#D2B48C");
@@ -147,7 +147,7 @@ const FloatingShoe = () => {
       productPrice: productPrice*shoeQty,
     };
     console.log(data);
-    // navigate("/shipping", { state: data });
+    navigate("/shipping", { state: data });
   };
 
   return (
