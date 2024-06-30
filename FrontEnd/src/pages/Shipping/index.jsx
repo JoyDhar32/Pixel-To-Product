@@ -55,7 +55,7 @@ const index = () => {
       );
       console.log("Shipping submitted successfully", shippingResponse.data);
 
-      alert("Form submitted successfully");
+      alert("Order Has Been Submitted Successfully! Please Proceed to Pay!");
       const finalTotal = order.total;
       const finalProductName = order.product_name;
 

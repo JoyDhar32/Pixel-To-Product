@@ -124,6 +124,7 @@ const FloatingShoe = () => {
 
   const shoesData = (e) => {
     e.preventDefault();
+    document.body.style.cursor = `auto`;
     const data = {
       grund: grund,
       nike_logga: nike_logga,

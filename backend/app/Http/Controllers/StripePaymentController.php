@@ -12,9 +12,9 @@ use Stripe\Checkout\Session;
 
 class StripePaymentController extends Controller
 {
-    public function index($name,$amount, $qty )
+    public function index($name,$amount )
     {
-        return view(view: 'payment', data: ['name'=>$name , 'amount' => $amount, 'qty' => $qty]);
+        return view(view: 'payment', data: ['name'=>$name , 'amount' => $amount]);
     }
 
     public function checkout(Request $request)

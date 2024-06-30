@@ -108,6 +108,7 @@ const FloatingShoe = () => {
 
   const shoesData = (e) => {
     e.preventDefault();
+    document.body.style.cursor = `auto`;
     const data = {
       mesh: mesh,
       stripes: stripes,

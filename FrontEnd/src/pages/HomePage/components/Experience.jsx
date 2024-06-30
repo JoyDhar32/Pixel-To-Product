@@ -15,6 +15,14 @@ import { Scene } from "./Scene";
 
 export const scenes = [
   {
+    path: "models/frau_shoes.glb",
+    mainColor: "#ffdec0",
+    name: "Sport Model",
+    description:
+    "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
+  price: 99,
+  },
+  {
     path: "models/minish_shoe_house.glb",
     mainColor: "green",
     name: "Shoe House",
@@ -30,14 +38,7 @@ export const scenes = [
     "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
   price: 99,
   },
-  {
-    path: "models/frau_shoes.glb",
-    mainColor: "#ffdec0",
-    name: "Sport Model",
-    description:
-    "3D Shoe House revolutionizes footwear shopping by offering a unique virtual experience",
-  price: 99,
-  },
+ 
 ];
 
 const CameraHandler = ({ slideDistance }) => {

@@ -27,7 +27,7 @@ const Home = () => {
 
           <motion.div className="home-content" {...headContainerAnimation}>
             <motion.div {...headTextAnimation}>
-              <h1 className="head-text text-[#7AE1E6]">
+              <h1 className="head-text">
                 LET'S <br className="xl:block hidden" /> Customize
               </h1>
             </motion.div>
@@ -36,8 +36,10 @@ const Home = () => {
               className="flex flex-col gap-5"
             >
               <p className="max-w-md font-normal text-white text-base">
-              Experience Shopping in Every Dimension <strong>Elevate Your Online Buying</strong>With Next Generation Ecommerce
+              Experience Shopping in Every Dimension <strong>Elevate Your Online Buying</strong>With Next Generation Ecommerce Platform
+
               </p>
+              <p className="max-w-md font-normal text-white text-base"> Price:  <strong className="text-[#EFBD48] text-bold">$49.00</strong></p>
 
               <CustomButton 
                 type="filled"

@@ -12,7 +12,7 @@
             <input type="hidden" name="_token" id="payment-method" value="{{csrf_token()}}">
             <input type="hidden" name="name" id="payment-method" value={{$name}} />
             <input type="hidden" name="amount" id="amount" value={{$amount}} />
-            <button type="submit" style="padding: 12px 24px; background-color: #4CAF50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: background-color 0.3s; margin:15px 0">Procceed To Checkout</button>
+            <button type="submit" style="padding: 12px 24px; background-color: #4CAF50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: background-color 0.3s; margin:15px 0">Proceed To Checkout</button>
         </form>
     </div>
 </body>

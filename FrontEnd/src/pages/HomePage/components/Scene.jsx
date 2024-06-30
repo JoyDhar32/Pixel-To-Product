@@ -37,7 +37,7 @@ export const Scene = ({ mainColor, path, ...props }) => {
           maxPolarAngle={DEG2RAD * 75}
           minDistance={6}
           maxDistance={8}
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={3.5}
         />
         <primitive object={scene} scale={ratioScale} />
         <ambientLight intensity={0.1} color="pink" />

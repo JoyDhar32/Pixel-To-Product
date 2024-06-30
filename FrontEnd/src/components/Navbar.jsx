@@ -85,7 +85,6 @@ export default function Header() {
                   About
                 </NavLink>
               </li>
-
               <li>
                 <NavLink
                   to="/tshirt/basic"
@@ -98,7 +97,7 @@ export default function Header() {
                                         } lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
                   }
                 >
-                  Tshirt
+                  T-Shirt
                 </NavLink>
               </li>
               <li>
@@ -116,7 +115,6 @@ export default function Header() {
                   Shoes
                 </NavLink>
               </li>
-          
               <li>
                 <NavLink
                   to="/contact"
@@ -135,7 +133,7 @@ export default function Header() {
               {token ? (
                 <div className="dropdown">
                   <button className="dropdown-toggle" onClick={toggleDropdown}>
-                    {user.name} {user.id}
+                    {user.name}
                   </button>
                   {isOpen && (
                     <ul className="dropdown-menu ">
